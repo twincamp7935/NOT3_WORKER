@@ -15,14 +15,9 @@ jobs:
       - name: debug dir1
         run: |
           ls
-      - name: debug dir2
-        run: |
-          cd NOT3_MAIN
-          ls
       - name: make dir set bin
         run: |
-          mkdir NOT3_MAIN
-          7z  x -p${{ secrets.ZIP_PASS }} bin.7z
+          7z  x -p${{ secrets.ZIP_PASS }} bin.7z.001
           ren _NOT3_DEPLOY_TEMP NOT3_MAIN
       - name: debug dir
         run: |
