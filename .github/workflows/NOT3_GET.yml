@@ -1,0 +1,141 @@
+name: NOT3_GET
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - name: 🛎 Check out main
+        uses: actions/checkout@master
+        with:
+          repository: ${{ secrets.REPO_ORG }}/${{ secrets.REPO_NAME }}
+          token: ${{ secrets.REPO_TOKEN }}
+          fetch-depth: 1
+      - name: make dir set bin
+        run: |
+          mkdir NOT3_MAIN
+          7z  x -p${{ secrets.ZIP_PASS }} bin.7z
+          ren _NOT3_DEPLOY_TEMP NOT3_MAIN
+      - name: debug dir
+        run: |
+          cd NOT3_MAIN
+          ls
+      - name: Work_NPC
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar NewPageChecker
+      - name: Work_PG
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PageGetter
+      - name: Work_PPGO_HUP
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PPGO_HTML_UP
+      - name: Work_WC
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar WorkChecker
+#----------------------------------------------------------------------
+
+      - name: EZT_1
+        run: |
+          cd NOT3_MAIN
+          .\source\EzTransXpTranslator\EzTransXpTranslator1\EzTransXpTranslator1\bin\x86\Release\EzTransXpTranslator1.exe
+        continue-on-error: true
+      - name: GT_1
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar GTrans
+        continue-on-error: true
+      - name: PPGO_WAIT_1
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PPGO_WAIT
+        continue-on-error: true
+      - name: PPGO_1
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PPGO
+        continue-on-error: true
+      - name: WC_1
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar WorkChecker
+#----------------------------------------------------------------------
+
+      - name: EZT_2
+        run: |
+          cd NOT3_MAIN
+          .\source\EzTransXpTranslator\EzTransXpTranslator1\EzTransXpTranslator1\bin\x86\Release\EzTransXpTranslator1.exe
+        continue-on-error: true
+      - name: GT_2
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar GTrans
+        continue-on-error: true
+      - name: PPGO_WAIT_2
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PPGO_WAIT
+        continue-on-error: true
+      - name: PPGO_2
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PPGO
+        continue-on-error: true
+      - name: WC_2
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar WorkChecker
+#----------------------------------------------------------------------
+
+      - name: EZT_3
+        run: |
+          cd NOT3_MAIN
+          .\source\EzTransXpTranslator\EzTransXpTranslator1\EzTransXpTranslator1\bin\x86\Release\EzTransXpTranslator1.exe
+        continue-on-error: true
+      - name: GT_3
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar GTrans
+        continue-on-error: true
+      - name: PPGO_3
+        run: |
+          cd NOT3_MAIN
+          .\source\PapagoWebTrans-win32-ia32\PapagoWebTrans.exe
+        continue-on-error: true
+      - name: WC_3
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar WorkChecker
+#----------------------------------------------------------------------
+      - name: J2T
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar Json2Txt
+      - name: WC_4
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar WorkChecker
+      - name: CWD
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar CheckWorkDone
+      - name: ZPM
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar ZipPagesMake
+      - name: PGP
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PagesGitPull
+      - name: PGUAP
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PagesGitUpdateAndPush
+      - name: PPGOD
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PPGO_HTML_DOWN
