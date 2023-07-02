@@ -12,6 +12,13 @@ jobs:
           repository: ${{ secrets.REPO_ORG }}/${{ secrets.REPO_NAME }}
           token: ${{ secrets.REPO_TOKEN }}
           fetch-depth: 1
+      - name: debug dir1
+        run: |
+          ls
+      - name: debug dir2
+        run: |
+          cd NOT3_MAIN
+          ls
       - name: make dir set bin
         run: |
           mkdir NOT3_MAIN
