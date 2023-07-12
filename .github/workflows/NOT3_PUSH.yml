@@ -1,8 +1,8 @@
 name: NOT3_PUSH
 
 on:
-#  schedule:
-#      - cron:  '20,45 * * * *'
+  schedule:
+      - cron:  '20,50 * * * *'
   workflow_dispatch:
 jobs:
   build:
@@ -16,9 +16,9 @@ jobs:
           repository: ${{ secrets.REPO_ORG }}/${{ secrets.REPO_NAME_WEB }}
           token: ${{ secrets.REPO_TOKEN }}
           fetch-depth: 1
-      - name: debug dir1
-        run: |
-          ls
+#      - name: debug dir1
+#        run: |
+#          ls
       - name: 🔨 Set up Java
         uses: actions/setup-java@v1
         with:
