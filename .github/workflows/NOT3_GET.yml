@@ -14,18 +14,18 @@ jobs:
           repository: ${{ secrets.REPO_ORG }}/${{ secrets.REPO_NAME }}
           token: ${{ secrets.REPO_TOKEN }}
           fetch-depth: 1
-      - name: debug dir1
-        run: |
-          ls
+#      - name: debug dir1
+#        run: |
+#          ls
       - name: make dir set bin
         run: |
           mkdir NOT3_REPO
           7z  x -p${{ secrets.ZIP_PASS }} bin.7z.001
           ren _NOT3_DEPLOY_TEMP NOT3_MAIN
-      - name: debug dir
-        run: |
-          cd NOT3_MAIN
-          ls
+#      - name: debug dir
+#        run: |
+#          cd NOT3_MAIN
+#          ls
       - name: Work_NPC
         run: |
           cd NOT3_MAIN
