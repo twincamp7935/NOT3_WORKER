@@ -1,0 +1,41 @@
+name: NOT3_PUB
+
+on:
+  schedule:
+      - cron:  '5 22 * * *'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - name: Check out main
+        uses: actions/checkout@master
+        with:
+          repository: ${{ secrets.REPO_ORG }}/${{ secrets.REPO_NAME }}
+          token: ${{ secrets.REPO_TOKEN }}
+          fetch-depth: 1
+      - name: make dir set bin
+        run: |
+          mkdir NOT3_REPO
+          7z  x -p${{ secrets.ZIP_PASS }} bin.7z.001
+          ren _NOT3_DEPLOY_TEMP NOT3_MAIN
+      - name: PGP
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar PagesGitPull
+      - name: HGP
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar HugoGitPull
+      - name: BP
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar BlogPost
+      - name: HCM
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar HugoContentMake
+      - name: HGPA
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar HugoGitPushAll
