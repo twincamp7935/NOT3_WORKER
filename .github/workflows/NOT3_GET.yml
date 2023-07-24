@@ -1,8 +1,8 @@
 name: NOT3_GET
 
 on:
-#  schedule:
-#      - cron:  '20 */6 * * *'
+  schedule:
+      - cron:  '20 */6 * * *'
   workflow_dispatch:
 jobs:
   build:
