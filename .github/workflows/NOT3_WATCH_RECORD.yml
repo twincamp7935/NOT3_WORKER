@@ -1,0 +1,25 @@
+name: NOT3_WATCH_RECORD
+
+on:
+  schedule:
+      - cron:  '10 18 * * *'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - name: Check out main
+        uses: actions/checkout@master
+        with:
+          repository: ${{ secrets.REPO_ORG }}/${{ secrets.REPO_NAME }}
+          token: ${{ secrets.REPO_TOKEN }}
+          fetch-depth: 1
+      - name: make dir set bin
+        run: |
+          mkdir NOT3_REPO
+          7z  x -p${{ secrets.ZIP_PASS }} bin.7z.001
+          ren _NOT3_DEPLOY_TEMP NOT3_MAIN
+      - name: Watch_Record
+        run: |
+          cd NOT3_MAIN
+          java -Xms128m -Xmx4g -jar NOT3_001_Main.jar WatchRecordSite
