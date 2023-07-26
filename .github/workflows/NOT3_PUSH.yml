@@ -55,15 +55,10 @@ jobs:
           git add .
           git commit -q -am "🚀 Deploy with ${GITHUB_WORKFLOW}"
           git push --all -f https://${{ secrets.REPO_TOKEN }}@github.com/${{ secrets.REPO_ORG }}/${{ secrets.REPO_NAME_WEB }}.git
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.2
+      - name: Deploy to surge
+        uses: dswistowski/surge-sh-action@v1
         with:
-          publish-dir: './docs'
-          production-branch: master
-          deploy-message: "Deploy from GitHub Actions"
-          enable-pull-request-comment: false
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NOT3_NETLI_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NOT3_NETLI_SITE_ID }}
+          domain: ${{ secrets.SU_DOMAIN }}
+          project: './docs'
+          login: ${{ secrets.SU_LOGIN }}
+          token: ${{ secrets.SU_TOKEN }}
