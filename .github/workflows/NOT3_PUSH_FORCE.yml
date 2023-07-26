@@ -1,0 +1,52 @@
+name: NOT3_PUSH_FORCE
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎 Check out main
+        uses: actions/checkout@master
+        with:
+          repository: ${{ secrets.REPO_ORG }}/${{ secrets.REPO_NAME_WEB }}
+          token: ${{ secrets.REPO_TOKEN }}
+          fetch-depth: 1
+      - name: 🔨 Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+          architecture: x64
+      - name: 🔨 Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: 🔧 Install tools npm
+        run: |
+          npm install postcss-cli autoprefixer
+      - name: 🤵 Install Hugo
+        run: |
+          mkdir tmp/ && cd tmp/
+          curl -sSL https://github.com/gohugoio/hugo/releases/download/v0.81.0/hugo_extended_0.81.0_Linux-64bit.tar.gz | tar -xvzf-
+          sudo mv hugo /usr/local/bin/
+          cd .. && rm -rf tmp/
+          hugo version
+      - name: 🧹 Clean site
+        run: |
+          if [ -d "docs" ]; then
+            rm -rf docs/*
+          fi
+          mkdir docs
+      - name: 🍳 Build site
+        run: hugo ${HUGO_ARGS:-""} -d ${DEST:-"docs"}
+      - name: Copy sitemap
+        run: cp ./docs/sitemap.xml ./sitemap.xml
+      - name: Deploy to surge
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          domain: ${{ secrets.SU_DOMAIN }}
+          project: './docs'
+          login: ${{ secrets.SU_LOGIN }}
+          token: ${{ secrets.SU_TOKEN }}
