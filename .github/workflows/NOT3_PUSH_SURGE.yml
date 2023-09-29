@@ -1,8 +1,8 @@
-name: NOT3_PUSH
+name: NOT3_PUSH_SURGE
 
 on:
-  schedule:
-      - cron:  '20,50 * * * *'
+#  schedule:
+#      - cron:  '20,50 * * * *'
   workflow_dispatch:
 jobs:
   build:
